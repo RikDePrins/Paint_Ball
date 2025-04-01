@@ -1,6 +1,7 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-public class BallMovement : MonoBehaviour
+public class BallController : MonoBehaviour
 {
     [SerializeField]
     private Rigidbody _rigidBody = null;
@@ -14,24 +15,25 @@ public class BallMovement : MonoBehaviour
     [SerializeField]
     bool _isTorqueEnabled = false;
 
-    [SerializeField]
-    private Input _input = null;
+    private Vector2 _normalizedBallMovementInput = Vector2.zero;
+
+    public void OnMove(InputAction.CallbackContext context)
+    {
+        _normalizedBallMovementInput = context.ReadValue<Vector2>();
+    }
 
     private void FixedUpdate()
     {
         Debug.Assert(_rigidBody != null);
-        Debug.Assert(_input != null);
-
-        Vector2 normalizedBallMovementInput = _input.GetNormalizedBallMovementInput();
 
         if (_isTorqueEnabled)
         {
-            Vector3 ballMovementDirection = new Vector3(normalizedBallMovementInput.y, 0f, -normalizedBallMovementInput.x);
+            Vector3 ballMovementDirection = new Vector3(_normalizedBallMovementInput.y, 0f, -_normalizedBallMovementInput.x);
             _rigidBody.AddTorque(_movementTorque * ballMovementDirection, ForceMode.Force);
         }
         else
         {
-            Vector3 ballMovementDirection = new Vector3(normalizedBallMovementInput.x, 0f, normalizedBallMovementInput.y);
+            Vector3 ballMovementDirection = new Vector3(_normalizedBallMovementInput.x, 0f, _normalizedBallMovementInput.y);
             _rigidBody.AddForce(_movementForce * ballMovementDirection, ForceMode.Force);
         }
     }
