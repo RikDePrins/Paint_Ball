@@ -49,8 +49,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rigidBody: {fileID: 2073406195541939861}
-  _movementForce: 5
-  _movementTorque: 5
+  _movementForce: 10
+  _movementTorque: 10
   _isTorqueEnabled: 1
 --- !u!135 &4602084418402343125
 SphereCollider:
@@ -83,7 +83,7 @@ Rigidbody:
   serializedVersion: 4
   m_Mass: 1
   m_Drag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 5
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}

@@ -21,7 +21,12 @@ public class BallController : MonoBehaviour
     private bool _isDashing = false;
     private float _chargeRate = 1f;
     private float _maxDashForce = 10f;
+    private float _dashForce = 0;
 
+    public void Awake()
+    {
+        _maxDashForce = 75 * _movementForce;
+    }
     public void OnMove(InputAction.CallbackContext context)
     {
         _normalizedBallMovementInput = context.ReadValue<Vector2>();
@@ -30,7 +35,7 @@ public class BallController : MonoBehaviour
     private void FixedUpdate()
     {
         Debug.Assert(_rigidBody != null);
-
+        if (_isDashing) return;
         if (_isTorqueEnabled)
         {
             Vector3 ballMovementDirection = new Vector3(_normalizedBallMovementInput.y, 0f, -_normalizedBallMovementInput.x);
@@ -47,26 +52,29 @@ public class BallController : MonoBehaviour
     {
         if (context.started)
         {
-            // Start tracking hold time
-            _holdTime = 0f;
             _isDashing = true;
-            _rigidBody.linearVelocity = Vector3.zero;  // Stop movement
+            _holdTime = 0; // Reset hold time when dash starts
         }
         else if (context.performed)
         {
-            // Keep increasing hold time while button is held
-            _holdTime += Time.deltaTime * _chargeRate;
-            _holdTime = Mathf.Clamp(_holdTime, 0, _maxDashForce);
+            _holdTime += Time.deltaTime;
+            _holdTime = Mathf.Clamp(_holdTime, 0, 1);
+            _dashForce = _maxDashForce * _holdTime;
+            Debug.Log(_dashForce);
         }
         else if (context.canceled)
         {
-            // Apply dash force in the forward direction
-            Vector3 dashDirection = transform.forward;
-            _rigidBody.AddForce(dashDirection * _holdTime, ForceMode.Impulse);
+            Vector3 dashDirection = new Vector3(_normalizedBallMovementInput.x, 0f, _normalizedBallMovementInput.y);
+            Vector3 torqueDirection = new Vector3(_normalizedBallMovementInput.y, 0f, -_normalizedBallMovementInput.x);
+
+            Debug.Log($"Applying Dash: {_dashForce}");
+            _rigidBody.AddForce(dashDirection * _dashForce, ForceMode.Impulse);
+            _rigidBody.AddTorque(100 * torqueDirection, ForceMode.Force);
 
             // Reset state
+            _holdTime = 0;
+            _dashForce = 0;
             _isDashing = false;
-            _holdTime = 0f;
         }
     }
 }
