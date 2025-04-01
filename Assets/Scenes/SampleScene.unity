@@ -498,6 +498,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BallManager
       objectReference: {fileID: 0}
+    - target: {fileID: 6165865431109787927, guid: eb7a59eb383b00442ac129b36d8e1a29, type: 3}
+      propertyPath: m_JoinBehavior
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8282147392427576228, guid: eb7a59eb383b00442ac129b36d8e1a29, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
