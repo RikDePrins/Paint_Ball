@@ -1,3 +1,5 @@
+
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,6 +9,21 @@ public class BallManager : MonoBehaviour
     private Material[] _materials = null;
 
     private int _currentJoinIndex = 0;
+
+    public List<Color> Colors
+    {
+        get
+        {
+            List<Color> colors = new();
+
+            foreach (Material material in _materials)
+            {
+                colors.Add(material.color);
+            }
+
+            return colors;
+        }
+    }
 
     public void OnJoin(PlayerInput input)
     {
