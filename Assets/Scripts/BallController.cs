@@ -52,11 +52,13 @@ public class BallController : MonoBehaviour
     {
         if (context.started)
         {
+            Debug.Log("Dash started");
             _isDashing = true;
             _holdTime = 0; // Reset hold time when dash starts
         }
         else if (context.performed)
         {
+            Debug.Log("Dash performed");
             _holdTime += Time.deltaTime;
             _holdTime = Mathf.Clamp(_holdTime, 0, 1);
             _dashForce = _maxDashForce * _holdTime;
@@ -64,6 +66,7 @@ public class BallController : MonoBehaviour
         }
         else if (context.canceled)
         {
+            Debug.Log("Dash canceled");
             Vector3 dashDirection = new Vector3(_normalizedBallMovementInput.x, 0f, _normalizedBallMovementInput.y);
             Vector3 torqueDirection = new Vector3(_normalizedBallMovementInput.y, 0f, -_normalizedBallMovementInput.x);
 

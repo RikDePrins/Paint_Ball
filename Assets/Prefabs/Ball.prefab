@@ -130,7 +130,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 4209471875493581503}
         m_TargetAssemblyTypeName: BallController, Assembly-CSharp
-        m_MethodName: OnDash
+        m_MethodName: OnMove
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -144,13 +144,13 @@ MonoBehaviour:
     m_ActionName: 'Ball/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d,/DualSenseGamepadHID/leftStick]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 244308047242757639}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
+      - m_Target: {fileID: 4209471875493581503}
+        m_TargetAssemblyTypeName: BallController, Assembly-CSharp
+        m_MethodName: OnDash
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
