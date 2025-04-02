@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2073406195541939861}
   - component: {fileID: 948961816363821270}
   - component: {fileID: 5897720197130022680}
+  - component: {fileID: 7132295199252637835}
   m_Layer: 0
   m_Name: Ball
   m_TagString: Player
@@ -262,6 +263,27 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!135 &7132295199252637835
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 244308047242757639}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 4
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3094635303892778382
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,4 +1,5 @@
 
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class TileBehaviour : MonoBehaviour
@@ -28,13 +29,25 @@ public class TileBehaviour : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
+            if(collision.gameObject.GetComponentInChildren<Renderer>() != null)
             SetColor(collision.gameObject.GetComponentInChildren<Renderer>().material.color);
         }
     }
-    // Update is called once per frame
-    void Update()
+
+    private void OnTriggerEnter(Collider other)
     {
-        SetColor(_CurrentColor);
+       if(other.gameObject.CompareTag("Player"))
+        {
+            other.gameObject.GetComponent<BallController>().AddTileInRadius(this.gameObject);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            other.gameObject.GetComponent<BallController>().RemoveTileInRadius(this.gameObject);
+        }
     }
 
     public void SetColor(Color color)
@@ -46,4 +59,8 @@ public class TileBehaviour : MonoBehaviour
         _material.SetColor("_EmissionColor", _CurrentColor * _intensity);
     }
 
+    public void SetColorHitByOtherPlayer()
+    {
+        
+    }
 }
