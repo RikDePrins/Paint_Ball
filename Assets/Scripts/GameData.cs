@@ -10,6 +10,7 @@ public class GameData : MonoBehaviour
     private Material[] _materials = null;
 
     private List<int> _scores = new();
+    private List<Color> _colors = new();
 
     public List<int> Scores
     {
@@ -31,14 +32,7 @@ public class GameData : MonoBehaviour
     {
         get
         {
-            List<Color> colors = new();
-
-            foreach (Material material in _materials)
-            {
-                colors.Add(material.color);
-            }
-
-            return colors;
+            return _colors;
         }
     }
 
@@ -52,6 +46,7 @@ public class GameData : MonoBehaviour
             foreach (Material material in _materials)
             {
                 _scores.Add(0);
+                _colors.Add(material.color);
             }
         }
         else

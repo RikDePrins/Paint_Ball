@@ -446,7 +446,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 59.870304
+  field of view: 59.870262
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -473,7 +473,7 @@ Transform:
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
   m_LocalRotation: {x: 0.3826834, y: 0.0000001571473, z: -0.000000065092536, w: 0.92387956}
-  m_LocalPosition: {x: 8.189064, y: 7.555975, z: 0.33427715}
+  m_LocalPosition: {x: 8.189069, y: 7.551443, z: 0.33881283}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1922,6 +1922,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 198164470afad5245af6209a87d50b7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onTileEnterEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 884430270}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: OnTileEnter
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onTileExitEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 884430270}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: OnTileExit
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   _tileTemplate: {fileID: 8920888956023235063, guid: 569a293d771f0e145bce4b04d71ee0b3, type: 3}
   _nrOfCols: 17
   _nrOfRows: 17
@@ -2119,7 +2149,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _timer: {fileID: 548296943}
-  _numberOfPlayers: 1
+  _numberOfPlayers: 2
   _countdownTime: 3
 --- !u!1 &1981218195
 GameObject:
