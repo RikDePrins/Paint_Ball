@@ -73,14 +73,16 @@ public class BallController : MonoBehaviour
         {
             _isRespawning = true;
             _respawnTimer = 3f;
-            gameObject.SetActive(false);
+            gameObject.transform.position = new Vector3(-1000, -1000, -1000);
         }
 
+        Debug.Log(_respawnTimer);
         if (_isRespawning)
         {
             _respawnTimer -= Time.deltaTime;
             if (_respawnTimer <= 0)
             {
+                Debug.Log("Respawning");
                 Respawn();
             }
         }
@@ -158,7 +160,6 @@ public class BallController : MonoBehaviour
         transform.position = _startingPosition;
         _rigidBody.linearVelocity = Vector3.zero;
         _rigidBody.angularVelocity = Vector3.zero;
-        gameObject.SetActive(true);
         _isRespawning = false;
     }
 }
