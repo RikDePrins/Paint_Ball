@@ -23,7 +23,6 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         _colors = GameData.Instance.Colors;
-        
     }
 
     private void Update()
@@ -41,7 +40,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void OnOrbEnter(Color otherColor)
+    public void OnTileEnter(Color otherColor)
     {
         for (int index = 0; index < _colors.Count; ++index)
         {
@@ -53,7 +52,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void OnOrbExit(Color otherColor)
+    public void OnTileExit(Color otherColor)
     {
         for (int index = 0; index < _colors.Count; ++index)
         {
