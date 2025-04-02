@@ -50,6 +50,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bb776e41cb198f4ea703aad8a823dc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _LandMineTemplate: {fileID: 6311490819101736954, guid: 7e83a140a3a7bf9448a65f590539634a, type: 3}
   _RollVFXTemplate: {fileID: 1343726412810132884, guid: 27cf9856aa246284d889bc467ca57f9d, type: 3}
   _rigidBody: {fileID: 2073406195541939861}
   _movementForce: 9.64

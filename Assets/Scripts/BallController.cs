@@ -8,6 +8,9 @@ using UnityEngine.VFX;
 public class BallController : MonoBehaviour
 {
     [SerializeField]
+    private GameObject _LandMineTemplate = null;
+
+    [SerializeField]
     private GameObject _RollVFXTemplate = null;
     private GameObject _RollVFXObject = null;
     private VisualEffect _RollVFX = null;
@@ -50,7 +53,13 @@ public class BallController : MonoBehaviour
         _RollVFX = _RollVFXObject.GetComponent<VisualEffect>();
         _RollVFX.SetVector3("BasePosition", transform.position - new Vector3(0, 0.5f, 0));
     }
+    public void Start()
+    {
+        var mineObject = Instantiate(_LandMineTemplate, transform.position, Quaternion.identity);
+        mineObject.transform.parent = null;
 
+        mineObject.GetComponent<LandMineBehaviour>().OwningPlayer = gameObject;
+    }
     public void OnMove(InputAction.CallbackContext context)
     {
         _normalizedBallMovementInput = context.ReadValue<Vector2>();
