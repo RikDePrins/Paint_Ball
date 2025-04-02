@@ -26,6 +26,9 @@ public class BallController : MonoBehaviour
     private bool _startGame = false;
     private float _dashCoolDown = 3f;
     private float _knockbackCooldown = 0f;
+    private Vector3 _startingPosition;
+    private bool _isRespawning = false;
+    private float _respawnTimer = 0f;
 
     private List<GameObject> _tilesInRadius = new List<GameObject>();
 
@@ -33,6 +36,7 @@ public class BallController : MonoBehaviour
     {
         _maxDashForce = 75 * _movementForce;
         _audioSource = GetComponent<AudioSource>();
+        _startingPosition = transform.position;
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -59,11 +63,27 @@ public class BallController : MonoBehaviour
 
     private void Update()
     {
-        if(_knockbackCooldown > 0)
+        if (_knockbackCooldown > 0)
         {
             _knockbackCooldown -= Time.deltaTime;
         }
         _dashCoolDown -= Time.deltaTime;
+
+        if (transform.position.y < -5 && !_isRespawning)
+        {
+            _isRespawning = true;
+            _respawnTimer = 3f;
+            gameObject.SetActive(false);
+        }
+
+        if (_isRespawning)
+        {
+            _respawnTimer -= Time.deltaTime;
+            if (_respawnTimer <= 0)
+            {
+                Respawn();
+            }
+        }
     }
 
     public void OnDash(InputAction.CallbackContext context)
@@ -110,14 +130,6 @@ public class BallController : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("Tile"))
-        {
-            Debug.Log("Hellnah");
-        }
-    }
-
     public void StartGame()
     {
         _startGame = true;
@@ -139,5 +151,14 @@ public class BallController : MonoBehaviour
         { 
             tile.GetComponent<TileBehaviour>().SetColor(color);
         }
+    }
+
+    private void Respawn()
+    {
+        transform.position = _startingPosition;
+        _rigidBody.linearVelocity = Vector3.zero;
+        _rigidBody.angularVelocity = Vector3.zero;
+        gameObject.SetActive(true);
+        _isRespawning = false;
     }
 }
