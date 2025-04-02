@@ -18377,6 +18377,34 @@ PrefabInstance:
       propertyPath: m_JoinBehavior
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8098493609894808388, guid: eb7a59eb383b00442ac129b36d8e1a29, type: 3}
+      propertyPath: _spawnPoints.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8098493609894808388, guid: eb7a59eb383b00442ac129b36d8e1a29, type: 3}
+      propertyPath: _spawnPoints.Array.data[0].x
+      value: -6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8098493609894808388, guid: eb7a59eb383b00442ac129b36d8e1a29, type: 3}
+      propertyPath: _spawnPoints.Array.data[0].y
+      value: -43
+      objectReference: {fileID: 0}
+    - target: {fileID: 8098493609894808388, guid: eb7a59eb383b00442ac129b36d8e1a29, type: 3}
+      propertyPath: _spawnPoints.Array.data[0].z
+      value: 7.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8098493609894808388, guid: eb7a59eb383b00442ac129b36d8e1a29, type: 3}
+      propertyPath: _spawnPoints.Array.data[1].x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8098493609894808388, guid: eb7a59eb383b00442ac129b36d8e1a29, type: 3}
+      propertyPath: _spawnPoints.Array.data[1].y
+      value: -43
+      objectReference: {fileID: 0}
+    - target: {fileID: 8098493609894808388, guid: eb7a59eb383b00442ac129b36d8e1a29, type: 3}
+      propertyPath: _spawnPoints.Array.data[1].z
+      value: -7.59
+      objectReference: {fileID: 0}
     - target: {fileID: 8282147392427576228, guid: eb7a59eb383b00442ac129b36d8e1a29, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -18512,7 +18540,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _timer: {fileID: 548296943}
-  _numberOfPlayers: 1
+  _numberOfPlayers: 2
   _countdownTime: 3
 --- !u!1001 &1970780977
 PrefabInstance:

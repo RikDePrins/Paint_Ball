@@ -7,7 +7,8 @@ public class BallManager : MonoBehaviour
 {
     [SerializeField]
     private Material[] _materials = null;
-
+    [SerializeField]
+    private Vector3[] _spawnPoints = null;
     private int _currentJoinIndex = 0;
 
     public List<Color> Colors
@@ -34,6 +35,7 @@ public class BallManager : MonoBehaviour
             meshRenderer.material = _materials[_currentJoinIndex];
         }
 
+        input.gameObject.transform.position = _spawnPoints[_currentJoinIndex];
         ++_currentJoinIndex;
     }
 

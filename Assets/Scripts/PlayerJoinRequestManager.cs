@@ -17,7 +17,7 @@ public class PlayerJoinRequestManager : MonoBehaviour
 
     void Update()
     {
-        if (!_isCountingDown && FindObjectsByType<BallController>(FindObjectsSortMode.None).Length == 1)
+        if (!_isCountingDown && FindObjectsByType<BallController>(FindObjectsSortMode.None).Length == _numberOfPlayers)
         {
             StartCoroutine(StartTimer());
         }
