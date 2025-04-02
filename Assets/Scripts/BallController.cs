@@ -23,6 +23,8 @@ public class BallController : MonoBehaviour
     private float _maxDashForce = 10f;
     private float _dashForce = 0;
 
+    private bool _startGame = false;
+
     public void Awake()
     {
         _maxDashForce = 75 * _movementForce;
@@ -35,6 +37,7 @@ public class BallController : MonoBehaviour
     private void FixedUpdate()
     {
         Debug.Assert(_rigidBody != null);
+        if (!_startGame) return;
         if (_isDashing) return;
         if (_isTorqueEnabled)
         {
@@ -50,6 +53,7 @@ public class BallController : MonoBehaviour
 
     public void OnDash(InputAction.CallbackContext context)
     {
+        if(!_startGame) return;
         if (context.started)
         {
             Debug.Log("Dash started");
@@ -79,5 +83,10 @@ public class BallController : MonoBehaviour
             _dashForce = 0;
             _isDashing = false;
         }
+    }
+
+    public void StartGame()
+    {
+        _startGame = true;
     }
 }
