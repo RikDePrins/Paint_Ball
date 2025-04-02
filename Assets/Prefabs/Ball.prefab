@@ -13,10 +13,9 @@ GameObject:
   - component: {fileID: 4602084418402343125}
   - component: {fileID: 2073406195541939861}
   - component: {fileID: 948961816363821270}
-  - component: {fileID: 797024358155928040}
   m_Layer: 0
   m_Name: Ball
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -163,19 +162,6 @@ MonoBehaviour:
   m_DefaultActionMap: Ball
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &797024358155928040
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 244308047242757639}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 20cf5f5ac65d0054a83e99c6d65503fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _splashTemplate: {fileID: 7468873019874270480, guid: 8ca0731334e7c63469a7df34a3d717c1, type: 3}
 --- !u!1 &3094635303892778382
 GameObject:
   m_ObjectHideFlags: 0
