@@ -22,12 +22,13 @@ public class BallController : MonoBehaviour
     private float _chargeRate = 1f;
     private float _maxDashForce = 10f;
     private float _dashForce = 0;
-
+    private AudioSource _audioSource;
     private bool _startGame = false;
 
     public void Awake()
     {
         _maxDashForce = 75 * _movementForce;
+        _audioSource = GetComponent<AudioSource>();
     }
     public void OnMove(InputAction.CallbackContext context)
     {
@@ -77,6 +78,8 @@ public class BallController : MonoBehaviour
             Debug.Log($"Applying Dash: {_dashForce}");
             _rigidBody.AddForce(dashDirection * _dashForce, ForceMode.Impulse);
             _rigidBody.AddTorque(100 * torqueDirection, ForceMode.Force);
+
+            _audioSource.Play();
 
             // Reset state
             _holdTime = 0;
