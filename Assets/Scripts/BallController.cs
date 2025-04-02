@@ -9,6 +9,9 @@ public class BallController : MonoBehaviour
 {
     [SerializeField]
     private GameObject _LandMineTemplate = null;
+    [SerializeField]
+    private float _Cooldown = 15f;
+    private float _Timer = 0;
 
     [SerializeField]
     private GameObject _RollVFXTemplate = null;
@@ -55,10 +58,7 @@ public class BallController : MonoBehaviour
     }
     public void Start()
     {
-        var mineObject = Instantiate(_LandMineTemplate, transform.position, Quaternion.identity);
-        mineObject.transform.parent = null;
-
-        mineObject.GetComponent<LandMineBehaviour>().OwningPlayer = gameObject;
+       
     }
     public void OnMove(InputAction.CallbackContext context)
     {
@@ -115,6 +115,8 @@ public class BallController : MonoBehaviour
                 Respawn();
             }
         }
+
+        if (_Timer > 0f) _Timer -= Time.deltaTime;
     }
 
     public void OnDash(InputAction.CallbackContext context)
@@ -190,5 +192,20 @@ public class BallController : MonoBehaviour
         _rigidBody.linearVelocity = Vector3.zero;
         _rigidBody.angularVelocity = Vector3.zero;
         _isRespawning = false;
+    }
+
+    public void OnPlantMine(InputAction.CallbackContext context)
+    {
+        
+        if(context.performed)
+        {
+            if (_Timer > 0f) return;
+            var mineObject = Instantiate(_LandMineTemplate, transform.position, Quaternion.identity);
+            mineObject.transform.parent = null;
+
+            mineObject.GetComponent<LandMineBehaviour>().OwningPlayer = gameObject;
+            _Timer = _Cooldown;
+        }
+       
     }
 }

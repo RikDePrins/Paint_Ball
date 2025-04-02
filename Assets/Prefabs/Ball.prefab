@@ -161,6 +161,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 402818de-3493-4b11-9bcf-5c69beee09e5
     m_ActionName: 'Ball/Dash[/Keyboard/space]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4209471875493581503}
+        m_TargetAssemblyTypeName: BallController, Assembly-CSharp
+        m_MethodName: OnPlantMine
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 1a1dc190-1432-487f-8c07-00d1afde0b2c
+    m_ActionName: 'Ball/PlantMine[/Keyboard/e,/XInputControllerWindows/rightTrigger]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Ball
