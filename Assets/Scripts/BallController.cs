@@ -1,8 +1,12 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.VFX;
 
 public class BallController : MonoBehaviour
 {
+    [SerializeField]
+    private VisualEffect _RollVFX = null;
+
     [SerializeField]
     private Rigidbody _rigidBody = null;
 
@@ -49,6 +53,9 @@ public class BallController : MonoBehaviour
             Vector3 ballMovementDirection = new Vector3(_normalizedBallMovementInput.x, 0f, _normalizedBallMovementInput.y);
             _rigidBody.AddForce(_movementForce * ballMovementDirection, ForceMode.Force);
         }
+
+        _RollVFX.SetVector3("VelocityDirection", _rigidBody.linearVelocity);
+        _RollVFX.SetVector3("BasePosition", transform.position - new Vector3(0,0.5f,0));
     }
 
     public void OnDash(InputAction.CallbackContext context)
