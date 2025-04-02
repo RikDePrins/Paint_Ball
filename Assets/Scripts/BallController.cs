@@ -32,7 +32,7 @@ public class BallController : MonoBehaviour
     private float _holdTime = 0;
     private bool _isDashing = false;
     private float _maxDashForce = 10f;
-    private AudioSource _audioSource;
+    private List<AudioSource> _audioSources = new List<AudioSource>();
     private bool _startGame = false;
     private float _dashCoolDown = 3f;
     private float _knockbackCooldown = 0f;
@@ -45,7 +45,7 @@ public class BallController : MonoBehaviour
     public void Awake()
     {
         _maxDashForce = 75 * _movementForce;
-        _audioSource = GetComponent<AudioSource>();
+        _audioSources = new List<AudioSource>(GetComponents<AudioSource>());
         _startingPosition = transform.position;
         _RollVFXObject = Instantiate(_RollVFXTemplate);
         _RollVFXObject.transform.parent = null;
@@ -97,12 +97,29 @@ public class BallController : MonoBehaviour
         {
             _isRespawning = true;
             _respawnTimer = 3f;
+<<<<<<< Updated upstream
             _rigidBody.useGravity = false;
             _rigidBody.isKinematic = true;
             gameObject.transform.position = new Vector3(8, -4, 8);
             _ = StartRespawn();
         }
 
+=======
+            _audioSources[1].Play();
+            gameObject.transform.position = new Vector3(8, -4, 8);
+        }
+
+        
+        if (_isRespawning)
+        {
+            _respawnTimer -= Time.deltaTime;
+            if (_respawnTimer <= 0)
+            {
+                
+                Respawn();
+            }
+        }
+>>>>>>> Stashed changes
     }
 
     public void OnDash(InputAction.CallbackContext context)
@@ -122,7 +139,7 @@ public class BallController : MonoBehaviour
 
             _rigidBody.AddForce(dashDirection * dashForce, ForceMode.Impulse);
             _rigidBody.AddTorque(100 * torqueDirection, ForceMode.Impulse);
-            _audioSource.Play();
+            _audioSources[0].Play();
 
             _knockbackCooldown = 0.5f;
             _dashCoolDown = 3f;
