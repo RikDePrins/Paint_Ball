@@ -1,9 +1,7 @@
 using TMPro;
 using UnityEngine;
-
 using System.Collections;
-using UnityEngine;
-using TMPro;
+using UnityEngine.InputSystem;
 
 public class PlayerJoinRequestManager : MonoBehaviour
 {
@@ -13,6 +11,8 @@ public class PlayerJoinRequestManager : MonoBehaviour
     int _numberOfPlayers = 2;
     [SerializeField]
     private float _countdownTime = 3f;
+    [SerializeField]
+    private PlayerInputManager _playerInputManager;
     private bool _isCountingDown = false;
 
     void Update()
@@ -49,6 +49,7 @@ public class PlayerJoinRequestManager : MonoBehaviour
         {
             item.StartTimer();
         }
+        _playerInputManager.DisableJoining();
         this.gameObject.SetActive(false);
     }
 }

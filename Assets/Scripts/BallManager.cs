@@ -1,5 +1,7 @@
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Windows;
 
 public class BallManager : MonoBehaviour
 {
@@ -10,19 +12,24 @@ public class BallManager : MonoBehaviour
 
     public void OnJoin(PlayerInput input)
     {
+        if(_currentJoinIndex >= _spawnPoints.Length) return;
         MeshRenderer[] meshRenderers = input.gameObject.GetComponentsInChildren<MeshRenderer>();
         
         foreach (MeshRenderer meshRenderer in meshRenderers)
         {
             meshRenderer.material = GameData.Instance.Materials[_currentJoinIndex];
         }
-
+        FindFirstObjectByType<CinemachineTargetGroup>().AddMember(input.gameObject.transform, 1, 1);
         input.gameObject.transform.position = _spawnPoints[_currentJoinIndex];
         ++_currentJoinIndex;
     }
 
-    public void OnLeave(PlayerInput input)
+    public void RemoveFromCamera(Transform actor)
     {
-        --_currentJoinIndex;
+        FindFirstObjectByType<CinemachineTargetGroup>().RemoveMember(actor);
     }
+    //public void AddToCamera()
+    //{
+    //    FindFirstObjectByType<CinemachineTargetGroup>().AddMember(input.gameObject.transform, 1, 1);
+    //}
 }
