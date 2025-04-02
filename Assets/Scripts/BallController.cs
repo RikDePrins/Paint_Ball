@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.iOS;
 
 public class BallController : MonoBehaviour
 {
@@ -22,10 +21,13 @@ public class BallController : MonoBehaviour
     private float _chargeRate = 1f;
     private float _maxDashForce = 10f;
     private float _dashForce = 0;
+    private AudioSource _audioSource;
+    private bool _startGame = false;
 
     public void Awake()
     {
         _maxDashForce = 75 * _movementForce;
+        _audioSource = GetComponent<AudioSource>();
     }
     public void OnMove(InputAction.CallbackContext context)
     {
@@ -35,6 +37,7 @@ public class BallController : MonoBehaviour
     private void FixedUpdate()
     {
         Debug.Assert(_rigidBody != null);
+        if (!_startGame) return;
         if (_isDashing) return;
         if (_isTorqueEnabled)
         {
@@ -50,6 +53,7 @@ public class BallController : MonoBehaviour
 
     public void OnDash(InputAction.CallbackContext context)
     {
+        if(!_startGame) return;
         if (context.started)
         {
             Debug.Log("Dash started");
@@ -74,10 +78,17 @@ public class BallController : MonoBehaviour
             _rigidBody.AddForce(dashDirection * _dashForce, ForceMode.Impulse);
             _rigidBody.AddTorque(100 * torqueDirection, ForceMode.Force);
 
+            _audioSource.Play();
+
             // Reset state
             _holdTime = 0;
             _dashForce = 0;
             _isDashing = false;
         }
+    }
+
+    public void StartGame()
+    {
+        _startGame = true;
     }
 }

@@ -1,27 +1,64 @@
+using System;
+using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance;
-    public bool player1Ready;
-    public bool player2Ready;
+    [SerializeField]
+    private TextMeshProUGUI[] _scoreTexts = null;
 
-    private void Awake()
+    [SerializeField]
+    private TextMeshProUGUI _gameTimeText = null;
+
+    [SerializeField]
+    private float _gameTimeInSeconds = 15f;
+
+    [SerializeField]
+    private string _endSceneText = "EndScene";
+
+    private List<Color> _colors = null;
+
+    private void Start()
     {
-        if (Instance == null)
+        _colors = GameData.Instance.Colors;
+    }
+
+    private void Update()
+    {
+        if (_gameTimeInSeconds > 0)
         {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
+            _gameTimeInSeconds -= Time.deltaTime;
+            _gameTimeText.text = TimeSpan.FromSeconds(_gameTimeInSeconds).ToString(@"m\:ss");
         }
         else
         {
-            Destroy(gameObject);
+            SceneManager.LoadScene(_endSceneText);
         }
     }
 
-    public void SetPlayerReady(int playerID, bool isReady)
+    public void OnOrbEnter(Color otherColor)
     {
-        if (playerID == 1) player1Ready = isReady;
-        if (playerID == 2) player2Ready = isReady;
+        for (int index = 0; index < _colors.Count; ++index)
+        {
+            if (_colors[index] == otherColor)
+            {
+                ++GameData.Instance.Scores[index];
+                _scoreTexts[index].text = GameData.Instance.Scores[index].ToString();
+            }
+        }
+    }
+
+    public void OnOrbExit(Color otherColor)
+    {
+        for (int index = 0; index < _colors.Count; ++index)
+        {
+            if (_colors[index] == otherColor)
+            {
+                --GameData.Instance.Scores[index];
+                _scoreTexts[index].text = GameData.Instance.Scores[index].ToString();
+            }
+        }
     }
 }

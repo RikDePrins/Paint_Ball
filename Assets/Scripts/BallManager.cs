@@ -1,29 +1,12 @@
-
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class BallManager : MonoBehaviour
 {
     [SerializeField]
-    private Material[] _materials = null;
+    private Vector3[] _spawnPoints = null;
 
     private int _currentJoinIndex = 0;
-
-    public List<Color> Colors
-    {
-        get
-        {
-            List<Color> colors = new();
-
-            foreach (Material material in _materials)
-            {
-                colors.Add(material.color);
-            }
-
-            return colors;
-        }
-    }
 
     public void OnJoin(PlayerInput input)
     {
@@ -31,9 +14,10 @@ public class BallManager : MonoBehaviour
         
         foreach (MeshRenderer meshRenderer in meshRenderers)
         {
-            meshRenderer.material = _materials[_currentJoinIndex];
+            meshRenderer.material = GameData.Instance.Materials[_currentJoinIndex];
         }
 
+        input.gameObject.transform.position = _spawnPoints[_currentJoinIndex];
         ++_currentJoinIndex;
     }
 
