@@ -12064,14 +12064,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58c0338adce605142a169a8c533363c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onGameEnd:
-    m_PersistentCalls:
-      m_Calls: []
   _scoreTexts:
   - {fileID: 252339003}
   - {fileID: 1532189038}
-  _gameTimerText: {fileID: 1993781746}
-  _gameData: {fileID: 1069492344}
+  _gameTimeText: {fileID: 1993781746}
   _gameTimeInSeconds: 15
   _endSceneText: EndScene
 --- !u!4 &1256801111 stripped

@@ -18,7 +18,7 @@ public class BallManager : MonoBehaviour
             meshRenderer.material = GameData.Instance.Materials[_currentJoinIndex];
         }
 
-        input.gameObject.transform.position = _spawnPoints[_currentJoinIndex];
+        //input.gameObject.transform.position = _spawnPoints[_currentJoinIndex];
         ++_currentJoinIndex;
     }
 
