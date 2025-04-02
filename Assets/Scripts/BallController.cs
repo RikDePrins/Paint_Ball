@@ -97,29 +97,12 @@ public class BallController : MonoBehaviour
         {
             _isRespawning = true;
             _respawnTimer = 3f;
-<<<<<<< Updated upstream
             _rigidBody.useGravity = false;
             _rigidBody.isKinematic = true;
             gameObject.transform.position = new Vector3(8, -4, 8);
+            _audioSources[1].Play();
             _ = StartRespawn();
         }
-
-=======
-            _audioSources[1].Play();
-            gameObject.transform.position = new Vector3(8, -4, 8);
-        }
-
-        
-        if (_isRespawning)
-        {
-            _respawnTimer -= Time.deltaTime;
-            if (_respawnTimer <= 0)
-            {
-                
-                Respawn();
-            }
-        }
->>>>>>> Stashed changes
     }
 
     public void OnDash(InputAction.CallbackContext context)
