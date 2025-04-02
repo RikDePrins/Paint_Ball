@@ -1650,7 +1650,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _timer: {fileID: 548296943}
-  _numberOfPlayers: 2
+  _numberOfPlayers: 1
   _countdownTime: 3
 --- !u!1 &1981218195
 GameObject:

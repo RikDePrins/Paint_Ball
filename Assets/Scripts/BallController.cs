@@ -3,9 +3,15 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.VFX;
 
 public class BallController : MonoBehaviour
 {
+    [SerializeField]
+    private GameObject _RollVFXTemplate = null;
+    private GameObject _RollVFXObject = null;
+    private VisualEffect _RollVFX = null;
+
     [SerializeField]
     private Rigidbody _rigidBody = null;
 
@@ -37,6 +43,12 @@ public class BallController : MonoBehaviour
         _maxDashForce = 75 * _movementForce;
         _audioSource = GetComponent<AudioSource>();
         _startingPosition = transform.position;
+        _RollVFXObject = Instantiate(_RollVFXTemplate);
+        _RollVFXObject.transform.parent = null;
+
+
+        _RollVFX = _RollVFXObject.GetComponent<VisualEffect>();
+        _RollVFX.SetVector3("BasePosition", transform.position - new Vector3(0, 0.5f, 0));
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -59,8 +71,16 @@ public class BallController : MonoBehaviour
             Vector3 ballMovementDirection = new Vector3(_normalizedBallMovementInput.x, 0f, _normalizedBallMovementInput.y);
             _rigidBody.AddForce(_movementForce * ballMovementDirection, ForceMode.Force);
         }
-    }
 
+
+        _RollVFX.SetBool("Moving", _rigidBody.linearVelocity.magnitude > 1f);
+        _RollVFX.SetVector3("VelocityDirection", _rigidBody.linearVelocity);
+        _RollVFX.SetVector3("BasePosition", transform.position - new Vector3(0,0.5f,0));
+    }
+    private void OnDestroy()
+    {
+        if(_RollVFXObject) Destroy(_RollVFXObject);
+    }
     private void Update()
     {
         if (_knockbackCooldown > 0)
