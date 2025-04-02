@@ -19,14 +19,17 @@ public class GameManager : MonoBehaviour
     private string _endSceneText = "EndScene";
 
     private List<Color> _colors = null;
-
+    private bool _startGame = false;
     private void Start()
     {
         _colors = GameData.Instance.Colors;
+        
     }
 
     private void Update()
     {
+        if (!_startGame) return;
+
         if (_gameTimeInSeconds > 0)
         {
             _gameTimeInSeconds -= Time.deltaTime;
@@ -60,5 +63,10 @@ public class GameManager : MonoBehaviour
                 _scoreTexts[index].text = GameData.Instance.Scores[index].ToString();
             }
         }
+    }
+
+    public void StartTimer()
+    {
+        _startGame = true;
     }
 }

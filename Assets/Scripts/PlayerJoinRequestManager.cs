@@ -45,6 +45,10 @@ public class PlayerJoinRequestManager : MonoBehaviour
         {
             item.StartGame();
         }
+        foreach (var item in FindObjectsByType<GameManager>(FindObjectsSortMode.None))
+        {
+            item.StartTimer();
+        }
         this.gameObject.SetActive(false);
     }
 }
