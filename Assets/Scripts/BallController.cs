@@ -203,6 +203,7 @@ public class BallController : MonoBehaviour
         
         if(context.performed)
         {
+            if (!_startGame) return;
             if (_Timer > 0f) return;
             var mineObject = Instantiate(_LandMineTemplate, transform.position, Quaternion.identity);
             mineObject.transform.parent = null;
