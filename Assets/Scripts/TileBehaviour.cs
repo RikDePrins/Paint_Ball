@@ -8,9 +8,10 @@ public class TileBehaviour : MonoBehaviour
     [SerializeField]
     private float _intensity = 2f;
     private Color _CurrentColor= Color.black;
-    private UnityEvent<Color> _onTileEnterEvent = null;
-    private UnityEvent<Color> _onTileExitEvent = null;
+    public UnityEvent<Color> _onTileEnterEvent = null;
+    public UnityEvent<Color> _onTileExitEvent = null;
 
+    private GameManager _gameManager = null;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()
     {
@@ -19,6 +20,7 @@ public class TileBehaviour : MonoBehaviour
         _material.EnableKeyword("_EMISSION");
         _onTileEnterEvent = GetComponentInParent<GenerateFloor>().onTileEnterEvent;
         _onTileExitEvent = GetComponentInParent<GenerateFloor>().onTileExitEvent;
+        _gameManager = FindFirstObjectByType<GameManager>();
     }
     private void Start()
     {
@@ -34,6 +36,7 @@ public class TileBehaviour : MonoBehaviour
         {
             if(collision.gameObject.GetComponentInChildren<Renderer>() != null)
             SetColor(collision.gameObject.GetComponentInChildren<Renderer>().material.color);
+
         }
     }
 
@@ -60,16 +63,16 @@ public class TileBehaviour : MonoBehaviour
             _onTileExitEvent?.Invoke(_CurrentColor);
         }
 
+        _gameManager.OnTileExit(_CurrentColor);
         _CurrentColor = color;
         _onTileEnterEvent?.Invoke(_CurrentColor);
         //_material.DisableKeyword("_EMISSION");
         _material.color = _CurrentColor;
         //_material.EnableKeyword("_EMISSION");
         _material.SetColor("_EmissionColor", _CurrentColor * _intensity);
-    }
+        _gameManager.OnTileEnter(_CurrentColor);
 
-    public void SetColorHitByOtherPlayer()
-    {
-        
+
+
     }
 }

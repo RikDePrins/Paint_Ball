@@ -68,6 +68,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _intensity: 10
+  _onTileEnterEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  _onTileExitEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &300840131143688746
 PrefabInstance:
   m_ObjectHideFlags: 0
