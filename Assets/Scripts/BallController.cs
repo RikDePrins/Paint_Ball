@@ -48,6 +48,8 @@ public class BallController : MonoBehaviour
     private List<CinemachineImpulseSource> _cameraShake = new List<CinemachineImpulseSource>();
     private List<GameObject> _tilesInRadius = new List<GameObject>();
 
+    private Material _material = null;
+    private GameObject _mineUI = null;
     public void Awake()
     {
         _maxDashForce = 75 * _movementForce;
@@ -59,10 +61,23 @@ public class BallController : MonoBehaviour
 
         _RollVFX = _RollVFXObject.GetComponent<VisualEffect>();
         _RollVFX.SetVector3("BasePosition", transform.position - new Vector3(0, 0.5f, 0));
+
     }
     public void Start()
     {
-       
+        Renderer ren = GetComponentInChildren<Renderer>();
+        if (ren) _material = ren.material;
+
+        if (_material.color == Color.blue)
+        {
+            _mineUI = GameObject.Find("BlueMine");
+        }
+
+        if (_material.color == Color.red)
+        {
+            _mineUI = GameObject.Find("RedMine");
+        }
+
     }
     public void OnMove(InputAction.CallbackContext context)
     {
@@ -113,7 +128,14 @@ public class BallController : MonoBehaviour
             _ = StartRespawn();
         }
 
-        if (_Timer > 0f) _Timer -= Time.deltaTime;
+        if (_Timer > 0f)
+        {
+            _Timer -= Time.deltaTime;
+            if (_Timer <= 0f)
+            {
+                _mineUI.SetActive(true);
+            }
+        }
     }
 
     public void OnDash(InputAction.CallbackContext context)
@@ -209,6 +231,7 @@ public class BallController : MonoBehaviour
             mineObject.transform.parent = null;
 
             mineObject.GetComponent<LandMineBehaviour>().OwningPlayer = gameObject;
+            _mineUI.SetActive(false);
             _Timer = _Cooldown;
         }
        
