@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Splash
   - Tile
+  - Mine
   layers:
   - Default
   - TransparentFX

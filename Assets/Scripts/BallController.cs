@@ -159,6 +159,7 @@ public class BallController : MonoBehaviour
 
             _knockbackCooldown = 0.5f;
             _dashCoolDown = 3f;
+            _holdTime = 0;
             _isDashing = false;
         }
         else if (context.performed)
@@ -175,13 +176,34 @@ public class BallController : MonoBehaviour
             Rigidbody otherRigidBody = collision.gameObject.GetComponent<Rigidbody>();
             if (otherRigidBody != null)
             {
-                otherRigidBody.gameObject.GetComponent<BallController>().ExplosionEffect(this.gameObject.GetComponentInChildren<MeshRenderer>().material.color);
+                // Trigger explosion effect
+                otherRigidBody.gameObject.GetComponent<BallController>()
+                    .ExplosionEffect(this.gameObject.GetComponentInChildren<MeshRenderer>().material.color);
+
+                // Apply knockback force
                 Vector3 launchDirection = (collision.transform.position - transform.position).normalized;
                 otherRigidBody.AddForce(launchDirection * (_maxDashForce / 50), ForceMode.Impulse);
+
+                // Camera shake effect
                 _cameraShake.ForEach(x => x.GenerateImpulse());
+
+                // Stop movement of the object
                 _rigidBody.linearVelocity = Vector3.zero;
                 _rigidBody.angularVelocity = Vector3.zero;
+
+                // Apply small controller rumble
+                StartCoroutine(TriggerRumble(0.3f, 0.5f, 0.2f));
             }
+        }
+    }
+
+    private IEnumerator TriggerRumble(float lowFrequency, float highFrequency, float duration)
+    {
+        if (Gamepad.current != null)
+        {
+            Gamepad.current.SetMotorSpeeds(0.3f, 0.5f); // Slightly stronger rumble
+            yield return new WaitForSeconds(duration);
+            Gamepad.current.SetMotorSpeeds(0, 0); // Stop vibration
         }
     }
 

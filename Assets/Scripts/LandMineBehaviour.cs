@@ -1,7 +1,9 @@
 using NUnit.Framework;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.VFX;
 
 public class LandMineBehaviour : MonoBehaviour
@@ -66,7 +68,6 @@ public class LandMineBehaviour : MonoBehaviour
         {
             tile.SetColor(_OwningPlayerMat.color);
         }
-
         var particle = Instantiate(_ExplosionPartile, transform);
         particle.transform.parent = null;
         particle.GetComponent<VisualEffect>().SetVector4("Color", _OwningPlayerMat.color);
@@ -75,5 +76,4 @@ public class LandMineBehaviour : MonoBehaviour
 
         Destroy(gameObject);
     }
-        
 }
