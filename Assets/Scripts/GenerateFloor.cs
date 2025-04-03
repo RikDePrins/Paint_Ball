@@ -1,7 +1,11 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class GenerateFloor : MonoBehaviour
 {
+    public UnityEvent<Color> onTileEnterEvent = null;
+    public UnityEvent<Color> onTileExitEvent = null;
+
     [SerializeField]
     private GameObject _tileTemplate;
     [SerializeField]

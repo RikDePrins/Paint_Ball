@@ -1,9 +1,13 @@
-using NUnit.Framework;
+using System;
+using System.Collections;
+using System.Threading.Tasks;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.VFX;
+using UnityEngine.Events;
+using Unity.Cinemachine;
 
 public class BallController : MonoBehaviour
 {
@@ -34,24 +38,24 @@ public class BallController : MonoBehaviour
     private float _holdTime = 0;
     private bool _isDashing = false;
     private float _maxDashForce = 10f;
-    private AudioSource _audioSource;
+    private List<AudioSource> _audioSources = new List<AudioSource>();
     private bool _startGame = false;
     private float _dashCoolDown = 3f;
     private float _knockbackCooldown = 0f;
     private Vector3 _startingPosition;
     private bool _isRespawning = false;
-    private float _respawnTimer = 0f;
-
+    private float _respawnTimer = 3f;
+    private List<CinemachineImpulseSource> _cameraShake = new List<CinemachineImpulseSource>();
     private List<GameObject> _tilesInRadius = new List<GameObject>();
 
     public void Awake()
     {
         _maxDashForce = 75 * _movementForce;
-        _audioSource = GetComponent<AudioSource>();
+        _audioSources = new List<AudioSource>(GetComponents<AudioSource>());
         _startingPosition = transform.position;
         _RollVFXObject = Instantiate(_RollVFXTemplate);
         _RollVFXObject.transform.parent = null;
-
+        _cameraShake.AddRange(FindObjectsByType<CinemachineImpulseSource>(FindObjectsSortMode.None));
 
         _RollVFX = _RollVFXObject.GetComponent<VisualEffect>();
         _RollVFX.SetVector3("BasePosition", transform.position - new Vector3(0, 0.5f, 0));
@@ -102,18 +106,11 @@ public class BallController : MonoBehaviour
         {
             _isRespawning = true;
             _respawnTimer = 3f;
-            gameObject.transform.position = new Vector3(-1000, -1000, -1000);
-        }
-
-        Debug.Log(_respawnTimer);
-        if (_isRespawning)
-        {
-            _respawnTimer -= Time.deltaTime;
-            if (_respawnTimer <= 0)
-            {
-                Debug.Log("Respawning");
-                Respawn();
-            }
+            _rigidBody.useGravity = false;
+            _rigidBody.isKinematic = true;
+            gameObject.transform.position = new Vector3(8, -4, 8);
+            _audioSources[1].Play();
+            _ = StartRespawn();
         }
 
         if (_Timer > 0f) _Timer -= Time.deltaTime;
@@ -136,7 +133,7 @@ public class BallController : MonoBehaviour
 
             _rigidBody.AddForce(dashDirection * dashForce, ForceMode.Impulse);
             _rigidBody.AddTorque(100 * torqueDirection, ForceMode.Impulse);
-            _audioSource.Play();
+            _audioSources[0].Play();
 
             _knockbackCooldown = 0.5f;
             _dashCoolDown = 3f;
@@ -159,6 +156,7 @@ public class BallController : MonoBehaviour
                 otherRigidBody.gameObject.GetComponent<BallController>().ExplosionEffect(this.gameObject.GetComponentInChildren<MeshRenderer>().material.color);
                 Vector3 launchDirection = (collision.transform.position - transform.position).normalized;
                 otherRigidBody.AddForce(launchDirection * (_maxDashForce / 50), ForceMode.Impulse);
+                _cameraShake.ForEach(x => x.GenerateImpulse());
             }
         }
     }
@@ -166,6 +164,7 @@ public class BallController : MonoBehaviour
     public void StartGame()
     {
         _startGame = true;
+        
     }
 
     public void AddTileInRadius(GameObject tile)
@@ -186,9 +185,12 @@ public class BallController : MonoBehaviour
         }
     }
 
-    private void Respawn()
+    private async Task StartRespawn()
     {
+        await Task.Delay(TimeSpan.FromSeconds(_respawnTimer));
         transform.position = _startingPosition;
+        _rigidBody.useGravity = true;
+        _rigidBody.isKinematic = false;
         _rigidBody.linearVelocity = Vector3.zero;
         _rigidBody.angularVelocity = Vector3.zero;
         _isRespawning = false;
