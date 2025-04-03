@@ -157,6 +157,8 @@ public class BallController : MonoBehaviour
                 Vector3 launchDirection = (collision.transform.position - transform.position).normalized;
                 otherRigidBody.AddForce(launchDirection * (_maxDashForce / 50), ForceMode.Impulse);
                 _cameraShake.ForEach(x => x.GenerateImpulse());
+                _rigidBody.linearVelocity = Vector3.zero;
+                _rigidBody.angularVelocity = Vector3.zero;
             }
         }
     }
